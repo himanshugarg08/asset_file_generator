@@ -1,0 +1,16 @@
+name: asset_file_generator
+description: A command-line application used to generate asset file in flutter project.
+version: 1.0.0
+# homepage: https://www.example.com
+
+environment:
+  sdk: '>=2.12.0 <3.0.0'
+
+# dependencies:
+#   path: ^1.8.0
+
+executables:
+  asset_file_generator:
+
+dev_dependencies:
+  pedantic: ^1.10.0
