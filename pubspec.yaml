@@ -10,7 +10,7 @@ environment:
 #   path: ^1.8.0
 
 executables:
-  asset_file_generator:
+  afg: asset_file_generator
 
 dev_dependencies:
   pedantic: ^1.10.0
