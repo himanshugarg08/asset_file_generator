@@ -1,86 +1,57 @@
 import 'dart:io';
-
-String joinPath(String first, String second) {
-  return first + '/' + second;
-}
-
-String getNameFromPath(String path) {
-  return path.split('/').last;
-}
-
-String getAssetName(String fileName) {
-  return fileName.split('.').first;
-}
-
-String getVariableName(String assetName) {
-  final nameList = assetName.split('_');
-  assetName = '';
-  for (var i = 0; i < nameList.length; i++) {
-    nameList[i] = nameList[i].toLowerCase();
-    if (i != 0) nameList[i] = nameList[i].capitalize();
-    assetName += nameList[i];
-  }
-  return assetName;
-}
-
-void generateAssetNameFile(
-    String path, String classNameSuffix, String exportPath) async {
-  final directory = Directory(path);
-  final folderName = getNameFromPath(path);
-
-  //get files
-  final entities = await directory.list().toList();
-
-  //file
-  final fileName = '$folderName.dart';
-  final file = File(joinPath(exportPath, fileName));
-  final sink = file.openWrite();
-  sink.write('class ${folderName.capitalize()}$classNameSuffix{\n');
-
-  for (var file in entities) {
-    final filePath =
-        joinPath(folderName, getNameFromPath(file.path.pathInRequiredFormat()));
-
-    final variableName = getVariableName(
-        getAssetName(getNameFromPath(file.path.pathInRequiredFormat())));
-
-    //write in file
-    sink.write("  static const String $variableName = '$filePath';\n");
-  }
-  sink.write('}\n');
-
-  //close file
-  await sink.close();
-  print('$fileName generated');
-}
+import 'helper_extentions.dart';
+import 'generate_asset_name_file.dart';
+import 'package:args/args.dart';
 
 void main(List<String> arguments) async {
-  final path = arguments[0];
-  final exportPath = arguments[1];
+  final argParser = ArgParser()
+    ..addOption(
+      'asset-path',
+      abbr: 'a',
+      defaultsTo: '.',
+      help: 'path to the directory where your assets are stored',
+    )
+    ..addOption(
+      'export-path',
+      abbr: 'e',
+      defaultsTo: '.',
+      help: 'path to the directory where you want to export',
+    )
+    ..addOption(
+      'class-suffix',
+      abbr: 's',
+      defaultsTo: 'Asset',
+      help: 'suffix added to the generated class name',
+    )
+    ..addFlag(
+      'help',
+      abbr: 'h',
+      negatable: false,
+      help: 'displays help information',
+    );
 
-  final classNameSuffix = 'Asset';
+  final argResults = argParser.parse(arguments);
 
-  final directory = Directory(path);
+  final path = argResults['asset-path'];
+  final exportPath = argResults['export-path'];
+  final classNameSuffix = argResults['class-suffix'];
 
-  final entities = await directory.list().toList();
+  if (argResults['help']) {
+    print('''** HELP **
+      ${argParser.usage}
+    ''');
+  } else {
+    final directory = Directory(path);
+    final entities = await directory.list().toList();
 
-  for (var entity in entities) {
-    final isDirectory = await FileSystemEntity.isDirectory(entity.path);
-    if (isDirectory) {
-      generateAssetNameFile(
-          entity.path.pathInRequiredFormat(), classNameSuffix, exportPath);
+    for (var entity in entities) {
+      final isDirectory = await FileSystemEntity.isDirectory(entity.path);
+      if (isDirectory) {
+        generateAssetNameFile(
+            entity.path.pathInRequiredFormat(), classNameSuffix, exportPath);
+      }
     }
-  }
-  generateAssetNameFile(
-      path.pathInRequiredFormat(), classNameSuffix, exportPath);
-}
-
-extension StringExtension on String {
-  String capitalize() {
-    return '${this[0].toUpperCase()}${substring(1).toLowerCase()}';
-  }
-
-  String pathInRequiredFormat() {
-    return replaceAll('\\', '/');
+    generateAssetNameFile(
+        path.pathInRequiredFormat(), classNameSuffix, exportPath);
   }
 }
