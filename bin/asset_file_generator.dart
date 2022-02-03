@@ -38,10 +38,11 @@ void generateAssetNameFile(
   sink.write('class ${folderName.capitalize()}$classNameSuffix{\n');
 
   for (var file in entities) {
-    final filePath = joinPath(folderName, getNameFromPath(file.path));
-    //print(filePath);
-    final variableName =
-        getVariableName(getAssetName(getNameFromPath(file.path)));
+    final filePath =
+        joinPath(folderName, getNameFromPath(file.path.pathInRequiredFormat()));
+
+    final variableName = getVariableName(
+        getAssetName(getNameFromPath(file.path.pathInRequiredFormat())));
 
     //write in file
     sink.write("  static const String $variableName = '$filePath';\n");
@@ -50,7 +51,7 @@ void generateAssetNameFile(
 
   //close file
   await sink.close();
-  print('$fileName Generated');
+  print('$fileName generated');
 }
 
 void main(List<String> arguments) async {
@@ -66,14 +67,20 @@ void main(List<String> arguments) async {
   for (var entity in entities) {
     final isDirectory = await FileSystemEntity.isDirectory(entity.path);
     if (isDirectory) {
-      generateAssetNameFile(entity.path, classNameSuffix, exportPath);
+      generateAssetNameFile(
+          entity.path.pathInRequiredFormat(), classNameSuffix, exportPath);
     }
   }
-  generateAssetNameFile(path, classNameSuffix, exportPath);
+  generateAssetNameFile(
+      path.pathInRequiredFormat(), classNameSuffix, exportPath);
 }
 
 extension StringExtension on String {
   String capitalize() {
     return '${this[0].toUpperCase()}${substring(1).toLowerCase()}';
+  }
+
+  String pathInRequiredFormat() {
+    return replaceAll('\\', '/');
   }
 }
