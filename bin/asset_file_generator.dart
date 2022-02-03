@@ -37,9 +37,7 @@ void main(List<String> arguments) async {
   final classNameSuffix = argResults['class-suffix'];
 
   if (argResults['help']) {
-    print('''** HELP **
-      ${argParser.usage}
-    ''');
+    print('''** HELP **\n${argParser.usage}''');
   } else {
     final directory = Directory(path);
     final entities = await directory.list().toList();
