@@ -32,11 +32,11 @@ void main(List<String> arguments) async {
 
   final argResults = argParser.parse(arguments);
 
-  final path = argResults['asset-path'];
-  final exportPath = argResults['export-path'];
-  final classNameSuffix = argResults['class-suffix'];
+  final String path = argResults['asset-path'];
+  final String exportPath = argResults['export-path'];
+  final String classNameSuffix = argResults['class-suffix'];
 
-  if (argResults['help']) {
+  if (argResults['help'] as bool) {
     print('''** HELP **\n${argParser.usage}''');
   } else {
     final directory = Directory(path);
