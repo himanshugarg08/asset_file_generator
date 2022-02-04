@@ -17,14 +17,17 @@ void generateAssetNameFile(
   sink.write('class ${folderName.capitalize()}$classNameSuffix{\n');
 
   for (var file in entities) {
-    final filePath =
-        joinPath(folderName, getNameFromPath(file.path.pathInRequiredFormat()));
+    final isFile = await FileSystemEntity.isFile(file.path);
+    if (isFile) {
+      final filePath = joinPath(
+          folderName, getNameFromPath(file.path.pathInRequiredFormat()));
 
-    final variableName = getVariableName(
-        getAssetName(getNameFromPath(file.path.pathInRequiredFormat())));
+      final variableName = getVariableName(
+          getAssetName(getNameFromPath(file.path.pathInRequiredFormat())));
 
-    //write in file
-    sink.write("  static const String $variableName = '$filePath';\n");
+      //write in file
+      sink.write("  static const String $variableName = '$filePath';\n");
+    }
   }
   sink.write('}\n');
 
