@@ -3,6 +3,8 @@ import 'helper_extentions.dart';
 import 'generate_asset_name_file.dart';
 import 'package:args/args.dart';
 
+import 'helper_functions.dart';
+
 void main(List<String> arguments) async {
   final argParser = ArgParser()
     ..addOption(
@@ -32,24 +34,86 @@ void main(List<String> arguments) async {
 
   final argResults = argParser.parse(arguments);
 
-  final String path = argResults['asset-path'];
-  final String exportPath = argResults['export-path'];
-  final String classNameSuffix = argResults['class-suffix'];
+  final String path = "./bin/assets"; //argResults['asset-path'];
+  final String exportPath = "./bin/export"; //argResults['export-path'];
+  final String classNameSuffix = "Asset"; //argResults['class-suffix'];
 
   if (argResults['help'] as bool) {
     print('''** HELP **\n${argParser.usage}''');
   } else {
-    final directory = Directory(path);
-    final entities = await directory.list().toList();
+    gen(path.pathInRequiredFormat());
 
-    for (var entity in entities) {
-      final isDirectory = await FileSystemEntity.isDirectory(entity.path);
-      if (isDirectory) {
-        generateAssetNameFile(
-            entity.path.pathInRequiredFormat(), classNameSuffix, exportPath);
-      }
-    }
-    generateAssetNameFile(
-        path.pathInRequiredFormat(), classNameSuffix, exportPath);
+    //assetPathName.add(getDirectoryNameFromPath(path.pathInRequiredFormat()));
+    //generate(path, classNameSuffix, exportPath);
+    // final directory = Directory(path);
+    // final entities = await directory.list().toList();
+
+    // for (var entity in entities) {
+    //   final isDirectory = await FileSystemEntity.isDirectory(entity.path);
+    //   if (isDirectory) {
+    //     generateAssetNameFile(
+    //         entity.path.pathInRequiredFormat(), classNameSuffix, exportPath);
+    //   }
+    // }
+    // generateAssetNameFile(
+    //     path.pathInRequiredFormat(), classNameSuffix, exportPath);
   }
+}
+
+List<String> assetPathName = [];
+
+String generateAssetPath() {
+  var path = '';
+  for (var value in assetPathName) {
+    value != assetPathName.last ? path += value + '/' : path += value;
+  }
+  return path;
+}
+
+void generate(String path, String classNameSuffix, String exportPath) async {
+  assetPathName.add(getDirectoryNameFromPath(path.pathInRequiredFormat()));
+
+  final directory = Directory(path);
+  final entities = await directory.list().toList();
+
+  for (var entity in entities) {
+    final isDirectory = await FileSystemEntity.isDirectory(entity.path);
+    if (isDirectory) {
+      generate(entity.path.pathInRequiredFormat(), classNameSuffix, exportPath);
+    }
+  }
+  generateAssetNameFile(
+      path.pathInRequiredFormat(), classNameSuffix, exportPath);
+  assetPathName.removeLast();
+}
+
+void gen(String p) async {
+  assetPathName.add(getDirectoryNameFromPath(p.pathInRequiredFormat()));
+  final directory = Directory(p);
+  final entities = await directory.list().toList();
+
+  for (var entity in entities) {
+    final isDirectory = await FileSystemEntity.isDirectory(entity.path);
+    if (isDirectory) {
+      gen(entity.path);
+    }
+    final isFile = await FileSystemEntity.isFile(entity.path);
+    if (isFile) {
+      // final filePath = joinPath(generateAssetPath(),
+      //     getDirectoryNameFromPath(entity.path.pathInRequiredFormat()));
+
+      print(generateAssetPath() +
+          '      ' +
+          getDirectoryNameFromPath(entity.path.pathInRequiredFormat()));
+
+      // final variableName = getVariableName(getAssetName(
+      //     getDirectoryNameFromPath(entity.path.pathInRequiredFormat())));
+
+      //write in file
+      //sink.write("  static const String $variableName = '$filePath';\n");
+    }
+  }
+  assetPathName.removeLast();
+  // generateAssetNameFile(
+  //     path.pathInRequiredFormat(), classNameSuffix, exportPath);
 }
