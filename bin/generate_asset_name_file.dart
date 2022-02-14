@@ -20,14 +20,12 @@ void generateAssetNameFile(
   for (var file in entities) {
     final isFile = await FileSystemEntity.isFile(file.path);
     if (isFile) {
-      final filePath = joinPath(generateAssetPath(),
-          getDirectoryNameFromPath(file.path.pathInRequiredFormat()));
-
       final variableName = getVariableName(getAssetName(
           getDirectoryNameFromPath(file.path.pathInRequiredFormat())));
 
       //write in file
-      sink.write("  static const String $variableName = '$filePath';\n");
+      sink.write(
+          "  static const String $variableName = '${file.path.substring(2)}';\n");
     }
   }
   sink.write('}\n');

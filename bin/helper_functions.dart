@@ -22,3 +22,7 @@ String getVariableName(String assetName) {
   }
   return assetName;
 }
+
+String getRelativePath(String path, String parent) {
+  return path.replaceAll(parent, '').substring(1);
+}
