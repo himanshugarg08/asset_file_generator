@@ -1,6 +1,6 @@
 import 'dart:io';
-import 'helper_extentions.dart';
-import 'helper_functions.dart';
+import '../utils/helper_extentions.dart';
+import '../utils/helper_functions.dart';
 
 ///generates single file of all the assets
 

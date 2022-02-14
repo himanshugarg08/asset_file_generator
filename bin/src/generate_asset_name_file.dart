@@ -1,7 +1,6 @@
 import 'dart:io';
-import 'asset_file_generator.dart';
-import 'helper_functions.dart';
-import 'helper_extentions.dart';
+import '../utils/helper_functions.dart';
+import '../utils/helper_extentions.dart';
 
 void generateAssetNameFile(
     String path, String classNameSuffix, String exportPath) async {

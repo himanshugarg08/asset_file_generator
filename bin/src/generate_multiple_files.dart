@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'generate_asset_name_file.dart';
-import 'helper_extentions.dart';
+import '../utils/helper_extentions.dart';
 
 ///generates multiple files of all the assets based on directory
 
