@@ -29,7 +29,7 @@ void generateSingleFile(
 
       //write in file
       sink.write(
-          "  static const String $variableName = '${entity.path.substring(2)}';\n");
+          "  static const String $variableName = '${entity.path.substring(2).pathInRequiredFormat()}';\n");
     }
   }
   sink.write('}\n');
