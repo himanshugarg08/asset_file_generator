@@ -1,6 +1,6 @@
 import 'package:args/args.dart';
-import 'generate_multiple_files.dart';
-import 'generate_single_file.dart';
+import 'src/generate_multiple_files.dart';
+import 'src/generate_single_file.dart';
 
 void main(List<String> arguments) async {
   final argParser = ArgParser()
