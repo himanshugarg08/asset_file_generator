@@ -1,11 +1,6 @@
-import 'dart:io';
+import 'package:args/args.dart';
 import 'generate_multiple_files.dart';
 import 'generate_single_file.dart';
-import 'helper_extentions.dart';
-import 'generate_asset_name_file.dart';
-import 'package:args/args.dart';
-
-import 'helper_functions.dart';
 
 void main(List<String> arguments) async {
   final argParser = ArgParser()
@@ -23,7 +18,7 @@ void main(List<String> arguments) async {
     )
     ..addOption(
       'class-suffix',
-      abbr: 's',
+      abbr: 'c',
       defaultsTo: 'Assets',
       help: 'suffix added to the generated class name',
     )
@@ -32,6 +27,11 @@ void main(List<String> arguments) async {
       abbr: 'h',
       negatable: false,
       help: 'displays help information',
+    )
+    ..addFlag(
+      'single-file',
+      abbr: 's',
+      help: 'generates a single file for all the assets',
     )
     ..addFlag(
       'multiple-files',
@@ -47,7 +47,7 @@ void main(List<String> arguments) async {
 
   if (argResults['help'] as bool) {
     print('''** HELP **\n${argParser.usage}''');
-  } else if (!(argResults['multiple-files'] as bool)) {
+  } else if (argResults['single-file'] as bool) {
     generateSingleFile(path, classNameSuffix, exportPath);
   } else if (argResults['multiple-files'] as bool) {
     generateMultipleFiles(path, classNameSuffix, exportPath);
