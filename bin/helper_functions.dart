@@ -4,7 +4,7 @@ String joinPath(String first, String second) {
   return first + '/' + second;
 }
 
-String getNameFromPath(String path) {
+String getDirectoryNameFromPath(String path) {
   return path.split('/').last;
 }
 
@@ -21,4 +21,8 @@ String getVariableName(String assetName) {
     assetName += nameList[i];
   }
   return assetName;
+}
+
+String getRelativePath(String path, String parent) {
+  return path.replaceAll(parent, '').substring(1);
 }

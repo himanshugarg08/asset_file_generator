@@ -1,11 +1,12 @@
 import 'dart:io';
+import 'asset_file_generator.dart';
 import 'helper_functions.dart';
 import 'helper_extentions.dart';
 
 void generateAssetNameFile(
     String path, String classNameSuffix, String exportPath) async {
   final directory = Directory(path);
-  final folderName = getNameFromPath(path);
+  final folderName = getDirectoryNameFromPath(path);
 
   //get files
   final entities = await directory.list().toList();
@@ -19,14 +20,12 @@ void generateAssetNameFile(
   for (var file in entities) {
     final isFile = await FileSystemEntity.isFile(file.path);
     if (isFile) {
-      final filePath = joinPath(
-          folderName, getNameFromPath(file.path.pathInRequiredFormat()));
-
-      final variableName = getVariableName(
-          getAssetName(getNameFromPath(file.path.pathInRequiredFormat())));
+      final variableName = getVariableName(getAssetName(
+          getDirectoryNameFromPath(file.path.pathInRequiredFormat())));
 
       //write in file
-      sink.write("  static const String $variableName = '$filePath';\n");
+      sink.write(
+          "  static const String $variableName = '${file.path.substring(2)}';\n");
     }
   }
   sink.write('}\n');
