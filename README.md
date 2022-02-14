@@ -3,11 +3,11 @@ A simple command line tool that is used to generate the file containing a class,
 
 ## How to Use?
 
-Run this command in your terminal
+Run this command in your terminal to activate the package.
 ```
 dart pub global activate asset_file_generator
 ```
-Run this command to see the available options.
+To run a script directly from the command line, add the system cache bin directory to your PATH environment variable. After adding the path run this command to see the available options.
 
 ```
 afg -h
