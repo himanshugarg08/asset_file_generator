@@ -25,7 +25,7 @@ void generateAssetNameFile(
 
       //write in file
       sink.write(
-          "  static const String $variableName = '${file.path.substring(2)}';\n");
+          "  static const String $variableName = '${file.path.substring(2).pathInRequiredFormat()}';\n");
     }
   }
   sink.write('}\n');
