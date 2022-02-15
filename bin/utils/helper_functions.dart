@@ -4,7 +4,7 @@ String joinPath(String first, String second) {
   return first + '/' + second;
 }
 
-String getDirectoryNameFromPath(String path) {
+String getAssetNameFromPath(String path) {
   return path.split('/').last;
 }
 
