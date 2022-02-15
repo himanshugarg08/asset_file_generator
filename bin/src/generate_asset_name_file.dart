@@ -20,7 +20,8 @@ void generateAssetNameFile(
     final isFile = await FileSystemEntity.isFile(file.path);
     if (isFile) {
       final variableName = getVariableName(getAssetName(
-          getDirectoryNameFromPath(file.path.pathInRequiredFormat())));
+          getDirectoryNameFromPath(
+              file.path.pathInRequiredFormat().replaceAll('-', '_'))));
 
       //write in file
       sink.write(
