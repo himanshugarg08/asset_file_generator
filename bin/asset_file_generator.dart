@@ -37,11 +37,13 @@ void main(List<String> arguments) async {
     ..addFlag(
       'single-file',
       abbr: 's',
+      negatable: false,
       help: 'generates a single file for all the assets',
     )
     ..addFlag(
       'multiple-files',
       abbr: 'm',
+      negatable: false,
       help: 'generates multiple files for all the assets based on directory',
     );
 
