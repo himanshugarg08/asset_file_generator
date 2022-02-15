@@ -21,6 +21,12 @@ void generateSingleFile(String path, String classNameSuffix, String exportPath,
   sink.write('class $classNameSuffix{\n');
 
   final entities = await directory.list(recursive: true).toList();
+
+  entities.sort((a, b) => getAssetName(
+          getAssetNameFromPath(a.path.pathInRequiredFormat()))
+      .compareTo(
+          getAssetName(getAssetNameFromPath(b.path.pathInRequiredFormat()))));
+
   for (var entity in entities) {
     final isFile = await FileSystemEntity.isFile(entity.path);
     if (isFile) {
