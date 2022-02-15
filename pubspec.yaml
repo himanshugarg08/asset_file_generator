@@ -7,6 +7,10 @@ homepage: https://github.com/himanshugarg08/asset_file_generator
 environment:
   sdk: '>=2.12.0 <3.0.0'
 
+platforms:
+  macos:
+  windows:
+
 dependencies:
   args: ^2.3.0
 

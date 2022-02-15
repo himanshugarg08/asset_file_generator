@@ -4,11 +4,11 @@ import '../utils/helper_functions.dart';
 
 ///generates single file of all the assets
 
-void generateSingleFile(
-    String path, String classNameSuffix, String exportPath) async {
+void generateSingleFile(String path, String classNameSuffix, String exportPath,
+    List<String> allowedFileExtensions) async {
   final directory = Directory(path);
 
-  final folderName = getDirectoryNameFromPath(path.pathInRequiredFormat());
+  final folderName = getAssetNameFromPath(path.pathInRequiredFormat());
 
   final fileName = '$folderName.dart';
 
@@ -21,11 +21,23 @@ void generateSingleFile(
   sink.write('class $classNameSuffix{\n');
 
   final entities = await directory.list(recursive: true).toList();
+
+  entities.sort((a, b) => getAssetName(
+          getAssetNameFromPath(a.path.pathInRequiredFormat()))
+      .compareTo(
+          getAssetName(getAssetNameFromPath(b.path.pathInRequiredFormat()))));
+
   for (var entity in entities) {
     final isFile = await FileSystemEntity.isFile(entity.path);
     if (isFile) {
-      final variableName = getVariableName(getAssetName(
-          getDirectoryNameFromPath(entity.path.pathInRequiredFormat())));
+      final fileName = getAssetNameFromPath(entity.path.pathInRequiredFormat());
+
+      final assetName = getAssetName(fileName);
+
+      final assetExtension = fileName.split('.').last;
+
+      if (!allowedFileExtensions.contains(assetExtension)) continue;
+      final variableName = getVariableName(assetName);
 
       //write in file
       sink.write(

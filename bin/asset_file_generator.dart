@@ -22,6 +22,12 @@ void main(List<String> arguments) async {
       defaultsTo: 'Assets',
       help: 'suffix added to the generated class name',
     )
+    ..addOption(
+      'allowed-file-extentions',
+      abbr: 'f',
+      defaultsTo: 'png-svg-jpg-jpeg-gif-json',
+      help: 'files that will be included',
+    )
     ..addFlag(
       'help',
       abbr: 'h',
@@ -31,11 +37,13 @@ void main(List<String> arguments) async {
     ..addFlag(
       'single-file',
       abbr: 's',
+      negatable: false,
       help: 'generates a single file for all the assets',
     )
     ..addFlag(
       'multiple-files',
       abbr: 'm',
+      negatable: false,
       help: 'generates multiple files for all the assets based on directory',
     );
 
@@ -44,13 +52,17 @@ void main(List<String> arguments) async {
   final String path = argResults['asset-path'];
   final String exportPath = argResults['export-path'];
   final String classNameSuffix = argResults['class-suffix'];
+  final allowedFileExtensions =
+      (argResults['allowed-file-extentions'] as String).split('-');
 
   if (argResults['help'] as bool) {
     print('''** HELP **\n${argParser.usage}''');
   } else if (argResults['single-file'] as bool) {
-    generateSingleFile(path, classNameSuffix, exportPath);
+    generateSingleFile(
+        path, classNameSuffix, exportPath, allowedFileExtensions);
   } else if (argResults['multiple-files'] as bool) {
-    generateMultipleFiles(path, classNameSuffix, exportPath);
+    generateMultipleFiles(
+        path, classNameSuffix, exportPath, allowedFileExtensions);
   } else {
     print(
         'This command line tool is used to generate the file containing a class, where all the assets present in the given directory will be mapped to a unique variable name.\n');
