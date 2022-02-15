@@ -25,7 +25,8 @@ void generateSingleFile(
     final isFile = await FileSystemEntity.isFile(entity.path);
     if (isFile) {
       final variableName = getVariableName(getAssetName(
-          getDirectoryNameFromPath(entity.path.pathInRequiredFormat())));
+          getDirectoryNameFromPath(entity.path.pathInRequiredFormat())
+              .replaceAll('-', '_')));
 
       //write in file
       sink.write(
