@@ -10,6 +10,11 @@ void generateAssetNameFile(String path, String classNameSuffix,
   //get files
   final entities = await directory.list().toList();
 
+  entities.sort((a, b) => getAssetName(
+          getAssetNameFromPath(a.path.pathInRequiredFormat()))
+      .compareTo(
+          getAssetName(getAssetNameFromPath(b.path.pathInRequiredFormat()))));
+
   //file
   final fileName = '$folderName.dart';
   final file = File(joinPath(exportPath, fileName));
