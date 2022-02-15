@@ -4,8 +4,8 @@ import '../utils/helper_extentions.dart';
 
 ///generates multiple files of all the assets based on directory
 
-void generateMultipleFiles(
-    String path, String classNameSuffix, String exportPath) async {
+void generateMultipleFiles(String path, String classNameSuffix,
+    String exportPath, List<String> allowedFileExtensions) async {
   final directory = Directory(path);
 
   final entities = await directory.list().toList();
@@ -13,10 +13,10 @@ void generateMultipleFiles(
   for (var entity in entities) {
     final isDirectory = await FileSystemEntity.isDirectory(entity.path);
     if (isDirectory) {
-      generateMultipleFiles(
-          entity.path.pathInRequiredFormat(), classNameSuffix, exportPath);
+      generateMultipleFiles(entity.path.pathInRequiredFormat(), classNameSuffix,
+          exportPath, allowedFileExtensions);
     }
   }
-  generateAssetNameFile(
-      path.pathInRequiredFormat(), classNameSuffix, exportPath);
+  generateAssetNameFile(path.pathInRequiredFormat(), classNameSuffix,
+      exportPath, allowedFileExtensions);
 }

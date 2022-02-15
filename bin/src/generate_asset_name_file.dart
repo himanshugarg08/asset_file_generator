@@ -2,13 +2,18 @@ import 'dart:io';
 import '../utils/helper_functions.dart';
 import '../utils/helper_extentions.dart';
 
-void generateAssetNameFile(
-    String path, String classNameSuffix, String exportPath) async {
+void generateAssetNameFile(String path, String classNameSuffix,
+    String exportPath, List<String> allowedFileExtensions) async {
   final directory = Directory(path);
-  final folderName = getDirectoryNameFromPath(path);
+  final folderName = getAssetNameFromPath(path);
 
   //get files
   final entities = await directory.list().toList();
+
+  entities.sort((a, b) => getAssetName(
+          getAssetNameFromPath(a.path.pathInRequiredFormat()))
+      .compareTo(
+          getAssetName(getAssetNameFromPath(b.path.pathInRequiredFormat()))));
 
   //file
   final fileName = '$folderName.dart';
@@ -19,9 +24,15 @@ void generateAssetNameFile(
   for (var file in entities) {
     final isFile = await FileSystemEntity.isFile(file.path);
     if (isFile) {
-      final variableName = getVariableName(getAssetName(
-          getDirectoryNameFromPath(
-              file.path.pathInRequiredFormat().replaceAll('-', '_'))));
+      final fileName = getAssetNameFromPath(file.path.pathInRequiredFormat());
+
+      final assetName = getAssetName(fileName);
+
+      final assetExtension = fileName.split('.').last;
+
+      if (!allowedFileExtensions.contains(assetExtension)) continue;
+
+      final variableName = getVariableName(assetName);
 
       //write in file
       sink.write(
