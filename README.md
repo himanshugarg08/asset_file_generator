@@ -7,13 +7,35 @@ Run this command in your terminal to activate the package.
 ```
 dart pub global activate asset_file_generator
 ```
-To run a script directly from the command line, add the system cache bin directory to your PATH environment variable. After adding the path run this command to see the available options.
+To run a script directly from the command line, add the system cache bin directory to your PATH environment variable. After adding the path, run this command for help.
 
 ```
 afg -h
 ```
+Available arguments:
 
-## Contributing
+```
+-a, --asset-path                 path to the directory where your assets are stored
+                                 (defaults to ".")
+-e, --export-path                path to the directory where you want to export
+                                 (defaults to ".")
+-c, --class-suffix               suffix added to the generated class name
+                                 (defaults to "Assets")
+-f, --allowed-file-extentions    files that will be included
+                                 (defaults to "png-svg-jpg-jpeg-gif-json")
+-h, --help                       displays help information
+-s, --single-file                generates a single file for all the assets
+-m, --multiple-files             generates multiple files for all the assets based on directory
+```
+
+## Conventions:
+
+* The name of the file should be in lower case.
+* Multiple words should be joined using `'_'` to create separation.
+* It is recommended to move all your assets under same directory and then generate the file/files.
+* It is also recommended to create a separate directory for the exported file/files.
+
+#### Contributing:
 
 1. Fork it (<https://github.com/himanshugarg08/asset_file_generator/fork>)
 2. Create your feature branch (`git checkout -b feature/fooBar`)
