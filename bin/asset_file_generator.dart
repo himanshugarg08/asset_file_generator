@@ -7,13 +7,13 @@ void main(List<String> arguments) async {
     ..addOption(
       'asset-path',
       abbr: 'a',
-      defaultsTo: './assets',
+      defaultsTo: '.',
       help: 'path to the directory where your assets are stored',
     )
     ..addOption(
       'export-path',
       abbr: 'e',
-      defaultsTo: './export',
+      defaultsTo: '.',
       help: 'path to the directory where you want to export',
     )
     ..addOption(
