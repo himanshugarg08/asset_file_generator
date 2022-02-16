@@ -37,7 +37,7 @@ void generateSingleFile(String path, String classNameSuffix, String exportPath,
       final assetExtension = fileName.split('.').last;
 
       if (!allowedFileExtensions.contains(assetExtension)) continue;
-      final variableName = getVariableName(assetName);
+      final variableName = getVariableName(assetName.replaceAll('-', '_'));
 
       //write in file
       sink.write(

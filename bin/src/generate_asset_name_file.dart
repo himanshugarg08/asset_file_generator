@@ -32,7 +32,7 @@ void generateAssetNameFile(String path, String classNameSuffix,
 
       if (!allowedFileExtensions.contains(assetExtension)) continue;
 
-      final variableName = getVariableName(assetName);
+      final variableName = getVariableName(assetName.replaceAll('-', '_'));
 
       //write in file
       sink.write(
