@@ -1,6 +1,6 @@
 name: asset_file_generator
 description: A command-line application used to generate asset file in flutter project.
-version: 0.0.2
+version: 0.0.3
 repository: https://github.com/himanshugarg08/asset_file_generator
 homepage: https://github.com/himanshugarg08/asset_file_generator
 
