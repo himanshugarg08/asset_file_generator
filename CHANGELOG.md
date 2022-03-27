@@ -11,3 +11,8 @@
 ## 0.0.3
 
 - Variable name can now be created with image name having hyphen.
+
+## 0.0.4
+
+- Directory watcher is added to auto generate when file inside [asset-path] changed.
+- Fixed bug for new line.

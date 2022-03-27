@@ -1,4 +1,5 @@
 import 'package:args/args.dart';
+import 'package:watcher/watcher.dart';
 import 'src/generate_multiple_files.dart';
 import 'src/generate_single_file.dart';
 
@@ -45,10 +46,29 @@ void main(List<String> arguments) async {
       abbr: 'm',
       negatable: false,
       help: 'generates multiple files for all the assets based on directory',
+    )
+    ..addFlag(
+      'watch',
+      abbr: 'w',
+      negatable: false,
+      help: 'watch changes in the directory and re-generate the files',
     );
 
   final argResults = argParser.parse(arguments);
 
+  final usage = argParser.usage;
+
+  startGeneration(argResults, usage);
+
+  if (argResults['watch'] as bool) {
+    final watcher = DirectoryWatcher(argResults['asset-path']);
+    watcher.events.listen((_) {
+      startGeneration(argResults, usage);
+    });
+  }
+}
+
+void startGeneration(ArgResults argResults, String usage) {
   final String path = argResults['asset-path'];
   final String exportPath = argResults['export-path'];
   final String classNameSuffix = argResults['class-suffix'];
@@ -56,7 +76,7 @@ void main(List<String> arguments) async {
       (argResults['allowed-file-extentions'] as String).split('-');
 
   if (argResults['help'] as bool) {
-    print('''** HELP **\n${argParser.usage}''');
+    print('''** HELP **\n$usage''');
   } else if (argResults['single-file'] as bool) {
     generateSingleFile(
         path, classNameSuffix, exportPath, allowedFileExtensions);
@@ -66,6 +86,6 @@ void main(List<String> arguments) async {
   } else {
     print(
         'This command line tool is used to generate the file containing a class, where all the assets present in the given directory will be mapped to a unique variable name.\n');
-    print('''** HELP **\n${argParser.usage}''');
+    print('''** HELP **\n$usage''');
   }
 }
