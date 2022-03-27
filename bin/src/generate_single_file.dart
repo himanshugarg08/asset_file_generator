@@ -18,7 +18,7 @@ void generateSingleFile(String path, String classNameSuffix, String exportPath,
   //open file
   final sink = file.openWrite();
 
-  sink.write('class $classNameSuffix{\n');
+  sink.writeln('class $classNameSuffix{');
 
   final entities = await directory.list(recursive: true).toList();
 
@@ -44,7 +44,7 @@ void generateSingleFile(String path, String classNameSuffix, String exportPath,
           "  static const String $variableName = '${entity.path.substring(2).pathInRequiredFormat()}';");
     }
   }
-  sink.write('}\n');
+  sink.writeln('}');
 
   //close file
   await sink.close();

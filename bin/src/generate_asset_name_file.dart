@@ -19,7 +19,7 @@ void generateAssetNameFile(String path, String classNameSuffix,
   final fileName = '$folderName.dart';
   final file = File(joinPath(exportPath, fileName));
   final sink = file.openWrite();
-  sink.write('class ${folderName.capitalize()}$classNameSuffix{\n');
+  sink.writeln('class ${folderName.capitalize()}$classNameSuffix{');
 
   for (var file in entities) {
     final isFile = await FileSystemEntity.isFile(file.path);
@@ -39,7 +39,7 @@ void generateAssetNameFile(String path, String classNameSuffix,
           "  static const String $variableName = '${file.path.substring(2).pathInRequiredFormat()}';");
     }
   }
-  sink.write('}\n');
+  sink.writeln('}');
 
   //close file
   await sink.close();
