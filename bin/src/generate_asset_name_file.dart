@@ -35,8 +35,8 @@ void generateAssetNameFile(String path, String classNameSuffix,
       final variableName = getVariableName(assetName.replaceAll('-', '_'));
 
       //write in file
-      sink.write(
-          "  static const String $variableName = '${file.path.substring(2).pathInRequiredFormat()}';\n");
+      sink.writeln(
+          "  static const String $variableName = '${file.path.substring(2).pathInRequiredFormat()}';");
     }
   }
   sink.write('}\n');

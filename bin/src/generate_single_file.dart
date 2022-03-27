@@ -40,8 +40,8 @@ void generateSingleFile(String path, String classNameSuffix, String exportPath,
       final variableName = getVariableName(assetName.replaceAll('-', '_'));
 
       //write in file
-      sink.write(
-          "  static const String $variableName = '${entity.path.substring(2).pathInRequiredFormat()}';\n");
+      sink.writeln(
+          "  static const String $variableName = '${entity.path.substring(2).pathInRequiredFormat()}';");
     }
   }
   sink.write('}\n');
