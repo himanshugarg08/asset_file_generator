@@ -31,7 +31,7 @@ Available arguments:
 ## Conventions:
 
 * The name of the file should be in lower case.
-* Multiple words should be joined using `'_'` to create separation.
+* Multiple words of assets should be joined using `'_'` or `'-'` to create separation.
 * It is recommended to move all your assets under same directory and then generate the file/files.
 * It is also recommended to create a separate directory for the exported file/files.
 

@@ -8,6 +8,34 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.3.0"
+  async:
+    dependency: transitive
+    description:
+      name: async
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.8.2"
+  collection:
+    dependency: transitive
+    description:
+      name: collection
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.16.0"
+  meta:
+    dependency: transitive
+    description:
+      name: meta
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.7.0"
+  path:
+    dependency: transitive
+    description:
+      name: path
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.8.1"
   pedantic:
     dependency: "direct dev"
     description:
@@ -15,5 +43,12 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.11.1"
+  watcher:
+    dependency: "direct main"
+    description:
+      name: watcher
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
 sdks:
-  dart: ">=2.12.0 <3.0.0"
+  dart: ">=2.14.0 <3.0.0"
