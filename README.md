@@ -26,6 +26,7 @@ Available arguments:
 -h, --help                       displays help information
 -s, --single-file                generates a single file for all the assets
 -m, --multiple-files             generates multiple files for all the assets based on directory
+-w, --watch                      watch changes in the directory and re-generate the files
 ```
 
 ## Conventions:

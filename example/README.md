@@ -18,6 +18,14 @@ The number of files created will depends on how many different directories you h
 afg -m -a ./assets -e ./export
 ```
 
+## Start watching the directory for changes.
+ 
+This flag will generate files everytime the contents of directories have been added, removed, or modified. This can be paired up with any of the command mentioned above.
+
+```
+afg -w -a ./assets -e ./export
+```
+
 ## Allowing certain extension files:
 
 If you need `asset_file_generator` to pick only certain file extension, then you can do that by adding `-f` argument.  
