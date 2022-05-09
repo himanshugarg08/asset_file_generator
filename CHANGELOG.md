@@ -17,6 +17,6 @@
 - Directory watcher is added to auto generate when file inside [asset-path] changed.
 - Fixed bug for new line.
 
-## 0.0.4
+## 0.0.5
 
 - Updated Docs
